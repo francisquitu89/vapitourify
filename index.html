@@ -1,0 +1,78 @@
+<script>
+      var vapiInstance = null;
+
+
+
+      const assistant = "5c50f6ab-c82c-4f07-890a-f18823c90610";
+
+ 
+      const apiKey = "207d5a15-1f94-4bf7-8fe9-039ba1754a72";
+   
+
+
+      const buttonConfig = {
+        position: "bottom-right", // "bottom" | "top" | "left" | "right" | "top-right" | "top-left" | "bottom-left" | "bottom-right"
+        offset: "40px", // Distancia desde el borde
+        width: "50px", // Ancho mínimo del botón
+        height: "50px", // Alto del botón
+        idle: {
+          
+          color: `rgb(255, 20, 147)`,
+          type: "pill",
+          title: "Conversa con Roberto",
+          subtitle: "Asistente de IA",
+          icon: `https://unpkg.com/lucide-static@latest/icons/mic.svg`,
+        },
+        loading: {
+          
+          color: `rgb(93, 124, 202)`,
+          type: "pill",
+          title: "Conectando...",
+          subtitle: "Por favor espere",
+          icon: `https://unpkg.com/lucide-static@0.321.0/icons/loader-2.svg`,
+        },
+        active: {
+          
+          color: `rgb(255, 0, 0)`,
+          type: "pill",
+          title: "Conversación en progreso",
+          subtitle: "Fin de la conversación",
+          icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone-off.svg`,
+        },
+      };
+
+      (function (d, t) {
+        var g = document.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        g.src =
+          "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+        g.defer = true;
+        g.async = true;
+        s.parentNode.insertBefore(g, s);
+
+        g.onload = function () {
+          vapiInstance = window.vapiSDK.run({
+            apiKey: apiKey, // obligatorio
+            assistant: assistant, // obligatorio
+            config: buttonConfig, // opcional, usa tu configuración de estilos
+          });
+
+          // 
+          vapiInstance.on("call-start", () => {
+            console.log("Call has started");
+          });
+
+          vapiInstance.on("call-end", () => {
+            console.log("Call has stopped");
+          });
+
+          vapiInstance.on("message", (message) => {
+            console.log(message);
+          });
+
+          vapiInstance.on("error", (e) => {
+            console.error(e);
+          });
+        };
+      })(document, "script");
+    </script>
